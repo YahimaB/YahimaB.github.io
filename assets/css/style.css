@@ -34,15 +34,15 @@
         justify-content: start;
         align-items: center;
         flex-wrap: wrap;
+        height: 40px;
     }
     
     .local-cards {
         grid-area: local-cards;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: stretch;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 60px;
+        align-items: start;
     }
     
     .favourite {
@@ -116,11 +116,10 @@
     }
     
     .favourite-cards>ul {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-items: stretch;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 60px;
+        align-items: start;
     }
     
     .weather-card {
@@ -172,7 +171,7 @@
         width: 320px;
     }
     
-    .close-btn {
+    .search-btn {
         height: 100%;
         float: right;
         margin-left: 10px;
@@ -184,26 +183,33 @@
     }
     
     .local-header>h1 {
-        width: 320px;
+        flex: 0;
+        white-space: nowrap;
         font-size: 35px;
     }
     
-    @media screen and (min-width: 640) {
-        .weather-card {
-            display: block;
-            -webkit-box-pack: start;
-            -webkit-justify-content: flex-start;
-            -ms-flex-pack: start;
-            justify-content: flex-start;
-            list-style-type: none;
-        }
+    .local-header>div {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .mobile {
         display: none;
     }
     
-    @media screen and (max-width: 640) {
+    @media (max-width: 768px) {
+        .local-cards {
+            grid-template-columns: repeat(1, 1fr);
+        }
+        .favourite-cards>ul {
+            grid-template-columns: repeat(1, 1fr);
+        }
+        .favourite-header {
+            flex-direction: column;
+            align-items: start;
+        }
         .desktop {
             display: none;
         }
