@@ -89,11 +89,6 @@
         align-items: start;
     }
     
-    .right-btn {
-        flex: 1;
-        height: 100%;
-    }
-    
     .local-header>div {
         flex: 0;
         display: flex;
@@ -124,6 +119,11 @@
     .close-btn {
         height: 100%;
         float: right;
+    }
+    
+    button {
+        white-space: nowrap;
+        font-size: 20px;
     }
     
     .mobile {
