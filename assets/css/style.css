@@ -1,19 +1,32 @@
     html,
-    body,
-    .grid-container {
+    body {
         display: grid;
         height: 100%;
-        margin: 0;
         justify-items: center;
     }
     
-    .grid-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: min-content 1fr;
-        gap: 0px 0px;
-        grid-template-areas: "local" "favourite";
-        justify-items: stretch;
+    h1 {
+        flex: 1;
+        white-space: nowrap;
+        font-size: 35px;
+    }
+    
+    h2 {
+        font-weight: bold;
+        font-size: 40px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    h3 {
+        flex: 1;
+        font-size: 25px;
+    }
+    
+    h4 {
+        margin-left: 10px;
+        font-weight: bold;
+        color: whitesmoke;
     }
     
     .local {
@@ -23,7 +36,6 @@
         gap: 0px 0px;
         grid-template-areas: "local-header" "local-cards";
         grid-area: local;
-        max-width: 800px;
         justify-items: stretch;
     }
     
@@ -38,23 +50,6 @@
         margin-bottom: 10px;
     }
     
-    .local-header>h1 {
-        flex: 0;
-        white-space: nowrap;
-        font-size: 35px;
-    }
-    
-    .local-header>div {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .mobile {
-        display: none;
-    }
-    
     .local-cards {
         grid-area: local-cards;
         display: grid;
@@ -62,29 +57,6 @@
         grid-column-gap: 60px;
         align-items: start;
         margin-bottom: 10px;
-    }
-    
-    .local-card-header {
-        width: 320px;
-    }
-    
-    .local-card-header>h2 {
-        font-weight: bold;
-        font-size: 40px;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    
-    .local-card-header-content {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
-    
-    .local-card-header-content>p {
-        flex: 1;
-        font-size: 80px;
-        text-align: center;
     }
     
     .favourite {
@@ -106,9 +78,27 @@
         flex-wrap: wrap;
     }
     
-    .favourite-header>h1 {
-        width: 320px;
-        font-size: 35px;
+    .favourite-cards {
+        grid-area: favourite-cards;
+    }
+    
+    .favourite-cards>ul {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 60px;
+        align-items: start;
+    }
+    
+    .right-btn {
+        flex: 1;
+        height: 100%;
+    }
+    
+    .local-header>div {
+        flex: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .search-area {
@@ -126,15 +116,34 @@
         margin-left: 10px;
     }
     
-    .favourite-cards {
-        grid-area: favourite-cards;
+    .close-btn-space {
+        flex: 1;
+        height: 100%;
     }
     
-    .favourite-cards>ul {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-column-gap: 60px;
-        align-items: start;
+    .close-btn {
+        height: 100%;
+        float: right;
+    }
+    
+    .mobile {
+        display: none;
+    }
+    
+    .local-card-header {
+        width: 320px;
+    }
+    
+    .local-card-header-content {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+    .local-card-header-content>p {
+        flex: 1;
+        font-size: 80px;
+        text-align: center;
     }
     
     .weather-card {
@@ -151,11 +160,6 @@
         align-items: center;
     }
     
-    .card-header>h3 {
-        flex: 1;
-        font-size: 25px;
-    }
-    
     .card-header>p {
         padding-right: 5px;
         font-size: 30px;
@@ -165,16 +169,6 @@
         max-height: 100%;
         max-width: none;
         padding: 5px;
-    }
-    
-    .close-btn-space {
-        flex: 1;
-        height: 100%;
-    }
-    
-    .close-btn {
-        height: 100%;
-        float: right;
     }
     
     .card-param-list {
@@ -189,12 +183,6 @@
         flex-wrap: wrap;
         align-items: center;
         background-color: #5f5f5f;
-    }
-    
-    .card-param>h4 {
-        margin-left: 10px;
-        font-weight: bold;
-        color: whitesmoke;
     }
     
     .card-param>p {
@@ -214,24 +202,9 @@
             flex-direction: column;
             align-items: start;
         }
-        .desktop {
-            display: none;
-        }
-        .mobile {
-            display: block;
-        }
-    }
-    
-    @media (max-device-width: 720) {
-        .local-cards {
-            grid-template-columns: repeat(1, 1fr);
-        }
-        .favourite-cards>ul {
-            grid-template-columns: repeat(1, 1fr);
-        }
-        .favourite-header {
-            flex-direction: column;
-            align-items: start;
+        .card {
+            min-width: 320px;
+            max-width: 500px;
         }
         .desktop {
             display: none;
