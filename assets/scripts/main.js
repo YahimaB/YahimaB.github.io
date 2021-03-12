@@ -93,7 +93,12 @@ function addFavouriteCity(name) {
             closeCard(weatherCard);
         } else {
             let answer = request.response;
-            weatherCard.querySelector('.card-header h3').innerText = name;
+            if (localStorage.getItem(answer.name) != null) {
+                closeCard(weatherCard);
+                return;
+            }
+
+            weatherCard.querySelector('.card-header h3').innerText = answer.name;
             weatherCard.querySelector('.card-header p').style.visibility = "visible";
             weatherCard.querySelector('.card-header img').style.visibility = "visible";
             weatherCard.querySelector('.card-header p').innerText = Math.round(answer.main.temp) + '\u00B0C';
