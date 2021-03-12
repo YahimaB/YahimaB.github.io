@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="assets/css/reset.css">
-    <!-- <link rel="stylesheet" href="assets/css/outlines.css"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -27,19 +26,23 @@
 </head>
 
 <body>
+    <header>
+        <h1>Boyev Yaroslav's Weather Site</h1>
+    </header>
+
     <main>
         <div class="local">
-            <div class="local-header">
-                <h1>Погода здесь</h1>
+            <div class="local-header" id="local-header">
+                <h2>Погода здесь</h2>
                 <div class="close-btn-space">
-                    <button type="button" class="desktop">Обновить геолокацию</button>
-                    <input type="image" class="mobile close-btn" src="assets/images/refresh_btn.png" />
+                    <button type="button" class="desktop" onclick="onRefreshGeo()">Обновить геолокацию</button>
+                    <input type="image" onclick="onRefreshGeo()" class="mobile close-btn" src="assets/images/refresh_btn.png" />
                 </div>
             </div>
 
-            <div class="local-cards">
+            <div class="local-cards" id="local-cards">
                 <div class="local-card-header">
-                    <h2>City</h2>
+                    <h3>City</h3>
                     <div class="local-card-header-content">
                         <img src="assets/images/dumb.png" loading="lazy" alt="">
                         <p>5 C</p>
@@ -47,14 +50,6 @@
                 </div>
 
                 <ul class="card-param-list">
-                    <li class="card-param">
-                        <h4>Param</h4>
-                        <p>Param status</p>
-                    </li>
-                    <li class="card-param">
-                        <h4>Param</h4>
-                        <p>Param status</p>
-                    </li>
                 </ul>
             </div>
 
@@ -62,133 +57,43 @@
 
         <div class="favourite">
             <div class="favourite-header">
-                <h1>Избранное</h1>
+                <h2>Избранное</h2>
                 <div class="search-area">
-                    <input type="search" id="city-search" placeholder="Добавить новый город" style="width: 100%;">
-                    <input type="image" src="assets/images/search_btn.png" class="search-btn" />
+                    <input type="search" id="city-search" placeholder="Добавить новый город" style="width: 100%;" onsearch="onSearchFunction()" />
+                    <input type="image" src="assets/images/search_btn.png" class="search-btn" onclick="onSearchFunction()" />
                 </div>
             </div>
 
             <div class="favourite-cards">
-                <ul>
-                    <li class="weather-card">
-                        <div class="card-header">
-                            <h3>City</h3>
-                            <p>5 C</p>
-                            <img src="assets/images/dumb.png" loading="lazy" alt="" class="image">
-                            <div class="close-btn-space">
-                                <input type="image" src="assets/images/close_btn.png" class="close-btn" />
-                            </div>
-                        </div>
-                        <div>
-                            <ul class="card-param-list">
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="weather-card">
-                        <div class="card-header">
-                            <h3>City</h3>
-                            <p>5 C</p>
-                            <img src="assets/images/dumb.png" loading="lazy" alt="" class="image">
-                            <div class="close-btn-space">
-                                <input type="image" src="assets/images/close_btn.png" class="close-btn" />
-                            </div>
-                        </div>
-                        <div>
-                            <ul class="card-param-list">
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="weather-card">
-                        <div class="card-header">
-                            <h3>City</h3>
-                            <p>5 C</p>
-                            <img src="assets/images/dumb.png" loading="lazy" alt="" class="image">
-                            <div class="close-btn-space">
-                                <input type="image" src="assets/images/close_btn.png" class="close-btn" />
-                            </div>
-                        </div>
-                        <div>
-                            <ul class="card-param-list">
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="weather-card">
-                        <div class="card-header">
-                            <h3>City</h3>
-                            <p>5 C</p>
-                            <img src="assets/images/dumb.png" loading="lazy" alt="" class="image">
-                            <div class="close-btn-space">
-                                <input type="image" src="assets/images/close_btn.png" class="close-btn" />
-                            </div>
-                        </div>
-                        <div>
-                            <ul class="card-param-list">
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="weather-card">
-                        <div class="card-header">
-                            <h3>City</h3>
-                            <p>5 C</p>
-                            <img src="assets/images/dumb.png" loading="lazy" alt="" class="image">
-                            <div class="close-btn-space">
-                                <input type="image" src="assets/images/close_btn.png" class="close-btn" />
-                            </div>
-                        </div>
-                        <div>
-                            <ul class="card-param-list">
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                                <li class="card-param">
-                                    <h4>Param</h4>
-                                    <p>Param status</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                <ul id="favourite-cards">
                 </ul>
             </div>
         </div>
     </main>
 </body>
+
+<template id="card-param">
+    <li class="card-param">
+        <h4>Param</h4>
+        <p>Param status</p>
+    </li>
+</template>
+
+<template id="weather-card">
+    <div class="card-header">
+        <h3>City</h3>
+        <p>5 C</p>
+        <img src="assets/images/dumb.png" loading="lazy" alt="" class="image">
+        <div class="close-btn-space">
+            <input type="image" onclick="closeCard(this)" src="assets/images/close_btn.png" class="close-btn" />
+        </div>
+    </div>
+    <div>
+        <ul class="card-param-list">
+        </ul>
+    </div>
+</template>
+
+<script src="assets/scripts/main.js"></script>
 
 </html>
