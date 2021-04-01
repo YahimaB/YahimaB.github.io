@@ -2,11 +2,22 @@ const API_KEY = "effc6aa9be9027cc342841c6e0cb6081";
 const localCards = document.getElementById("local-cards");
 const favouriteCardsList = document.getElementById('favourite-cards');
 
+var desktopRefresh = document.getElementById("desktop-refresh");
+var mobileRefresh = document.getElementById("mobile-refresh");
+desktopRefresh.addEventListener("click", onRefreshGeo, false);
+mobileRefresh.addEventListener("click", onRefreshGeo, false);
+
+var searchField = document.getElementById("city-search");
+var searchButton = document.getElementById("search-btn");
+searchField.addEventListener("search", onSearchFunction, false);
+searchButton.addEventListener("click", onSearchFunction, false);
+
+
 window.onload = function() {
     onRefreshGeo();
     for (i = 0; i < localStorage.length; i++) {
         let cityName = localStorage.key(i);
-        addFavouriteCity(cityName);
+        addFavouriteCity(cityName, true);
     }
 };
 
@@ -45,6 +56,9 @@ function onGeoFailedCallback() {
     let request = new XMLHttpRequest();
     request.responseType = "json";
     request.open("GET", weather_url);
+    request.onerror = function() {
+        alert(`Ошибка ${request.status}`);
+    }
     request.onload = function() {
         if (request.status !== 200) {
             alert(`Ошибка ${request.status}: ${request.statusText}`);
@@ -67,13 +81,14 @@ function setupLocalCard(answer) {
 function onSearchFunction() {
     var searchBar = document.getElementById("city-search");
     var cityName = searchBar.value;
+    searchBar.value = null;
     console.log(cityName);
     if (localStorage.getItem(cityName) == null) {
-        addFavouriteCity(cityName);
+        addFavouriteCity(cityName, false);
     }
 }
 
-function addFavouriteCity(name) {
+function addFavouriteCity(name, refreshed) {
     const weatherCard = document.createElement("li");
     weatherCard.classList.add("weather-card");
     weatherCard.append(document.getElementById('weather-card').content.cloneNode(true))
@@ -87,13 +102,18 @@ function addFavouriteCity(name) {
     request.responseType = "json";
     request.open("GET", url);
     request.send();
+    request.onerror = function() {
+        alert(`Ошибка ${request.status}`);
+        closeCard(weatherCard);
+    }
     request.onload = function() {
         if (request.status !== 200) {
             alert(`Ошибка ${request.status}: ${request.statusText}`);
             closeCard(weatherCard);
         } else {
             let answer = request.response;
-            if (localStorage.getItem(answer.name) != null) {
+            if (localStorage.getItem(answer.name) != null && !refreshed) {
+                alert(`Ошибка : город "${name}" уже есть в списке`);
                 closeCard(weatherCard);
                 return;
             }
@@ -103,10 +123,14 @@ function addFavouriteCity(name) {
             weatherCard.querySelector('.card-header img').style.visibility = "visible";
             weatherCard.querySelector('.card-header p').innerText = Math.round(answer.main.temp) + '\u00B0C';
             weatherCard.querySelector('.card-header img').src = `http://openweathermap.org/img/wn/${answer.weather[0].icon}@2x.png`;
+            var closeButton = weatherCard.querySelector(".close-btn");
+            closeButton.addEventListener("click", function() {
+                closeCard(closeButton);
+            }, false);
             updateAllParams(weatherCard, answer);
 
-            if (localStorage.getItem(name) == null) {
-                localStorage.setItem(name, "1");
+            if (localStorage.getItem(answer.name) == null) {
+                localStorage.setItem(answer.name, "1");
             }
         }
     }
@@ -126,14 +150,6 @@ function addParam(parent, name, value) {
     param.querySelector('.card-param h4').innerText = name;
     param.querySelector('.card-param p').innerText = value;
     parent.append(param)
-}
-
-function closeWeatherCard(weatherCard) {
-    let cityName = weatherCard.closest('h3');
-    if (localStorage.getItem(cityName) != null) {
-        localStorage.removeItem(cityName);
-    }
-    weatherCard.closest(".weather-card").remove();
 }
 
 function closeCard(closeButton) {

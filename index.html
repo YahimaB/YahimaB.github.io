@@ -35,8 +35,8 @@
             <div class="local-header" id="local-header">
                 <h2>Погода здесь</h2>
                 <div class="close-btn-space">
-                    <button type="button" class="desktop" onclick="onRefreshGeo()">Обновить геолокацию</button>
-                    <input type="image" onclick="onRefreshGeo()" class="mobile close-btn" src="assets/images/refresh_btn.png" />
+                    <button type="button" class="desktop" id="desktop-refresh">Обновить геолокацию</button>
+                    <input type="image" class="mobile close-btn" id="mobile-refresh" src="assets/images/refresh_btn.png" />
                 </div>
             </div>
 
@@ -59,8 +59,8 @@
             <div class="favourite-header">
                 <h2>Избранное</h2>
                 <div class="search-area">
-                    <input type="search" id="city-search" placeholder="Добавить новый город" style="width: 100%;" onsearch="onSearchFunction()" />
-                    <input type="image" src="assets/images/search_btn.png" class="search-btn" onclick="onSearchFunction()" />
+                    <input type="search" id="city-search" placeholder="Добавить новый город" style="width: 100%;" />
+                    <input type="image" src="assets/images/search_btn.png" class="search-btn" id="search-btn" />
                 </div>
             </div>
 
@@ -85,7 +85,7 @@
         <p>5 C</p>
         <img src="assets/images/dumb.png" loading="lazy" alt="" class="image">
         <div class="close-btn-space">
-            <input type="image" onclick="closeCard(this)" src="assets/images/close_btn.png" class="close-btn" />
+            <input type="image" src="assets/images/close_btn.png" class="close-btn" />
         </div>
     </div>
     <div>
