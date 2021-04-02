@@ -24,7 +24,8 @@ function fetchWeather(req, res) {
 }
 
 router.get('/city', (req, res) => {
-    let weather_url = `https://api.openweathermap.org/data/2.5/weather?q=${req.query.q}&appid=${API_KEY}&units=metric`;
+    let weather_url = decodeURI(`https://api.openweathermap.org/data/2.5/weather?q=${req.query.q}&appid=${API_KEY}&units=metric`);
+    console.log(`${weather_url}`);
     fetchWeather(weather_url, res);
 });
 

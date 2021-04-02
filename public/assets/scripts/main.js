@@ -90,7 +90,6 @@ function onSearchFunction() {
     var searchBar = document.getElementById("city-search");
     var cityName = searchBar.value;
     searchBar.value = null;
-    console.log(cityName);
 
     addFavouriteCity(cityName, false);
 }
@@ -103,7 +102,6 @@ function addFavouriteCity(name, refreshed) {
     weatherCard.querySelector('.card-header p').style.visibility = "hidden";
     weatherCard.querySelector('.card-header img').style.visibility = "hidden";
     favouriteCardsList.append(weatherCard);
-
 
     fetch(`http://localhost:3000/weather/city?q=${name}`, { method: 'GET' })
         .then(weatherResponse => {
@@ -159,11 +157,11 @@ function addFavouriteCity(name, refreshed) {
 
 function updateAllParams(card, answer) {
     cardParamsList = card.querySelector('.card-param-list');
-    addParam(cardParamsList, "Ветер", `${answer.wind.speed} m/s at ${answer.wind.deg}\u00B0`);
-    addParam(cardParamsList, "Облачность", `${answer.weather[0].main}`);
-    addParam(cardParamsList, "Давление", `${answer.main.pressure} hPa`);
-    addParam(cardParamsList, "Влажность", `${answer.main.humidity} %`);
-    addParam(cardParamsList, "Координаты", `[${answer.coord.lon} ; ${answer.coord.lat}]`);
+    addParam(cardParamsList, "Wind", `${answer.wind.speed} m/s at ${answer.wind.deg}\u00B0`);
+    addParam(cardParamsList, "Condition", `${answer.weather[0].main}`);
+    addParam(cardParamsList, "Pressure", `${answer.main.pressure} hPa`);
+    addParam(cardParamsList, "Humidity", `${answer.main.humidity} %`);
+    addParam(cardParamsList, "Coordinates", `[${answer.coord.lon} ; ${answer.coord.lat}]`);
 }
 
 function addParam(parent, name, value) {
