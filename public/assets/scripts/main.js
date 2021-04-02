@@ -37,6 +37,9 @@ function onRefreshGeo() {
         localCards.querySelector('.local-card-header h3').innerHTML = "Wait please...";
         localCards.querySelector('.local-card-header-content').style.display = "none";
         localCards.querySelector('.card-param-list').innerHTML = '';
+        desktopRefresh.disabled = true;
+        mobileRefresh.disabled = true;
+
         geo = navigator.geolocation.getCurrentPosition(onGeoSuccessCallback, onGeoFailedCallback);
     } else {
         alert(`Your browser doesn't support geolocation`);
@@ -59,6 +62,10 @@ function onGeoSuccessCallback(position) {
         .catch(err => {
             alert(`Located city - ${err}`);
             localCards.querySelector('.local-card-header h3').innerHTML = "Error...";
+        })
+        .finally(() => {
+            desktopRefresh.disabled = false;
+            mobileRefresh.disabled = false;
         });
 }
 
@@ -75,6 +82,10 @@ function onGeoFailedCallback() {
         .catch(err => {
             alert(`NotLocated city - ${err}`);
             localCards.querySelector('.local-card-header h3').innerHTML = "Error...";
+        })
+        .finally(() => {
+            desktopRefresh.disabled = false;
+            mobileRefresh.disabled = false;
         });
 }
 
@@ -91,6 +102,8 @@ function onSearchFunction() {
     var cityName = searchBar.value;
     searchBar.value = null;
 
+    searchField.disabled = true;
+    searchButton.disabled = true;
     addFavouriteCity(cityName, false);
 }
 
@@ -108,6 +121,8 @@ function addFavouriteCity(name, refreshed) {
             if (weatherResponse.status != 200) {
                 alert(`Error ${weatherResponse.status}: ${weatherResponse.statusText}`);
                 closeCard(weatherCard);
+                searchField.disabled = false;
+                searchButton.disabled = false;
             } else {
                 weatherResponse.json()
                     .then(answer => {
@@ -122,11 +137,13 @@ function addFavouriteCity(name, refreshed) {
                                 closeCard(closeButton);
                             }, false);
                             updateAllParams(weatherCard, answer);
+                            searchField.disabled = false;
+                            searchButton.disabled = false;
                         } else {
                             fetch(`http://localhost:3000/favourites?name=${answer.name}`, { method: 'POST' })
                                 .then(response => {
                                     if (response.status != 200) {
-                                        alert(`Error ${response.status}: ${response.statusText}`);
+                                        alert(`Add city to DB ${response.status}: ${response.statusText}`);
                                         closeCard(weatherCard);
                                     } else {
                                         weatherCard.querySelector('.card-header h3').innerText = answer.name;
@@ -145,6 +162,10 @@ function addFavouriteCity(name, refreshed) {
                                     alert(`Add city to DB - ${err}`);
                                     closeCard(weatherCard);
                                 })
+                                .finally(() => {
+                                    searchField.disabled = false;
+                                    searchButton.disabled = false;
+                                })
                         }
                     })
             }
@@ -152,7 +173,9 @@ function addFavouriteCity(name, refreshed) {
         .catch(err => {
             alert(`Get city weather - ${err}`);
             closeCard(weatherCard);
-        });
+            searchField.disabled = false;
+            searchButton.disabled = false;
+        })
 }
 
 function updateAllParams(card, answer) {
