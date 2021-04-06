@@ -120,7 +120,7 @@ function addFavouriteCity(name, refreshed) {
         .then(weatherResponse => {
             if (weatherResponse.status != 200) {
                 alert(`Error ${weatherResponse.status}: ${weatherResponse.statusText}`);
-                closeCard(weatherCard);
+                closeCard(weatherCard, true);
                 searchField.disabled = false;
                 searchButton.disabled = false;
             } else {
@@ -134,7 +134,7 @@ function addFavouriteCity(name, refreshed) {
                             weatherCard.querySelector('.card-header img').src = answer.icon;
                             var closeButton = weatherCard.querySelector(".close-btn");
                             closeButton.addEventListener("click", function() {
-                                closeCard(closeButton);
+                                closeCard(closeButton, false);
                             }, false);
                             updateAllParams(weatherCard, answer);
                             searchField.disabled = false;
@@ -144,7 +144,7 @@ function addFavouriteCity(name, refreshed) {
                                 .then(response => {
                                     if (response.status != 200) {
                                         alert(`Add city to DB ${response.status}: ${response.statusText}`);
-                                        closeCard(weatherCard);
+                                        closeCard(weatherCard, true);
                                     } else {
                                         weatherCard.querySelector('.card-header h3').innerText = answer.name;
                                         weatherCard.querySelector('.card-header p').style.visibility = "visible";
@@ -160,7 +160,7 @@ function addFavouriteCity(name, refreshed) {
                                 })
                                 .catch(err => {
                                     alert(`Add city to DB - ${err}`);
-                                    closeCard(weatherCard);
+                                    closeCard(weatherCard, true);
                                 })
                                 .finally(() => {
                                     searchField.disabled = false;
@@ -172,7 +172,7 @@ function addFavouriteCity(name, refreshed) {
         })
         .catch(err => {
             alert(`Get city weather - ${err}`);
-            closeCard(weatherCard);
+            closeCard(weatherCard, true);
             searchField.disabled = false;
             searchButton.disabled = false;
         })
@@ -194,21 +194,25 @@ function addParam(parent, name, value) {
     parent.append(param)
 }
 
-function closeCard(closeButton) {
+function closeCard(closeButton, force) {
     let weatherCard = closeButton.closest(".weather-card");
     let cityName = weatherCard.querySelector('.card-header h3').innerText;
     let cardIndex = whichChild(weatherCard) - 1;
     console.log("card Index = " + cardIndex);
 
-    fetch(`http://localhost:3000/favourites?name=${cityName}`, { method: 'DELETE' })
-        .then(response => {
-            if (response.status != 200) {
-                alert(`Error ${response.status}: ${response.statusText}`);
-            } else {
-                weatherCard.remove();
-            }
-        })
-        .catch(err => alert(`Delete city - ${err}`));
+    if (force) {
+        weatherCard.remove();
+    } else {
+        fetch(`http://localhost:3000/favourites?name=${cityName}`, { method: 'DELETE' })
+            .then(response => {
+                if (response.status != 200) {
+                    alert(`Error ${response.status}: ${response.statusText}`);
+                } else {
+                    weatherCard.remove();
+                }
+            })
+            .catch(err => alert(`Delete city - ${err}`));
+    }
 }
 
 function whichChild(elem) {

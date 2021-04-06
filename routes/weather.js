@@ -5,6 +5,7 @@ const router = express.Router();
 const API_KEY = "effc6aa9be9027cc342841c6e0cb6081";
 
 function fetchWeather(req, res) {
+    req = encodeURI(req);
     fetch(req)
         .then(response => {
             if (response.status != 200) {
@@ -19,6 +20,7 @@ function fetchWeather(req, res) {
             }
         }).catch(err => {
             res.statusCode = 400;
+            console.log(err);
             res.send(`Unexpected error occured: ${err}`);
         })
 }
