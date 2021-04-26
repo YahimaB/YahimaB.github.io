@@ -107,6 +107,8 @@ function onSearchFunction() {
     addFavouriteCity(cityName, false);
 }
 
+var cardIsClosing = false;
+
 function addFavouriteCity(name, refreshed) {
     const weatherCard = document.createElement("li");
     weatherCard.classList.add("weather-card");
@@ -153,7 +155,8 @@ function addFavouriteCity(name, refreshed) {
                                         weatherCard.querySelector('.card-header img').src = answer.icon;
                                         var closeButton = weatherCard.querySelector(".close-btn");
                                         closeButton.addEventListener("click", function() {
-                                            closeCard(closeButton);
+                                            if (!cardIsClosing)
+                                                closeCard(closeButton);
                                         }, false);
                                         updateAllParams(weatherCard, answer);
                                     }
@@ -203,6 +206,7 @@ function closeCard(closeButton, force) {
     if (force) {
         weatherCard.remove();
     } else {
+        cardIsClosing = true;
         fetch(`http://localhost:3000/favourites?name=${cityName}`, { method: 'DELETE' })
             .then(response => {
                 if (response.status != 200) {
@@ -211,7 +215,10 @@ function closeCard(closeButton, force) {
                     weatherCard.remove();
                 }
             })
-            .catch(err => alert(`Delete city - ${err}`));
+            .catch(err => alert(`Delete city - ${err}`))
+            .finally(() => {
+                cardIsClosing = false;
+            });
     }
 }
 
